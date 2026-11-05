@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abrir no navegador</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<script>
+  // CAMBIA SOLO ESTA LINEA: la direccion de TU pagina web
+  var DESTINO = "https://TU-PAGINA.COM/";
+  // Runs before anything is painted: outside in-app browsers, skip the guide entirely
+  (function () {
+    var ua = navigator.userAgent || "";
+    var enApp = /TikTok|musical_ly|BytedanceWebview|Instagram|FBAN|FBAV|Snapchat/i.test(ua);
+    if (!enApp && !/[?&]guia=1/.test(location.search)) {
+      document.documentElement.style.visibility = "hidden";
+      location.replace(DESTINO);
+    }
+  })();
+</script>
+<style>
+  :root { --bg:#f6f8fb; --card:#fff; --text:#111; --muted:#667; --blue:#1a73e8; --border:#e4e8ee; --soft:#f1f3f6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0d1117; --card:#161b22; --text:#f0f3f6; --muted:#9aa4b2; --border:#2a313c; --soft:#1d242d; } }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,sans-serif; display:flex; justify-content:center; }
+  main { width:100%; max-width:460px; padding:64px 16px 32px; }
+  .globe { width:48px; height:48px; border-radius:50%; background:var(--blue); display:grid; place-items:center; margin:8px auto 16px; }
+  .globe svg { width:26px; height:26px; stroke:#fff; fill:none; stroke-width:2; }
+  h1 { font-size:1.7rem; line-height:1.15; text-align:center; margin:0 0 8px; letter-spacing:-.5px; }
+  .sub { text-align:center; color:var(--muted); margin:0 0 22px; }
+
+  /* Real "tap here" pointer: points at the browser's own ••• button, top-right */
+  .pointer { position:fixed; top:2px; right:10px; z-index:10; display:flex; flex-direction:column; align-items:flex-end; animation:bob 1s ease-in-out infinite; pointer-events:none; }
+  .pointer svg { width:44px; height:44px; margin-right:6px; }
+  .pointer span { background:#1b1f24; color:#fff; font-size:.75rem; font-weight:800; letter-spacing:.5px; padding:6px 12px; border-radius:999px; }
+  @keyframes bob { 50% { transform:translateY(6px); } }
+
+  .arrow path { fill:#d62839; stroke:#111; stroke-width:3; stroke-linejoin:round; }
+
+  /* Animated mock of the browser menu */
+  .guide { position:relative; background:var(--card); border:1px solid var(--border); border-radius:24px; height:310px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,.08); }
+  .badge { position:absolute; top:14px; left:14px; z-index:3; background:#1b1f24; color:#fff; font-size:.7rem; font-weight:700; letter-spacing:.5px; padding:6px 10px; border-radius:999px; display:flex; align-items:center; gap:6px; }
+  .badge i { width:8px; height:8px; border-radius:50%; background:#2ecc71; }
+  .dots { position:absolute; top:10px; right:16px; z-index:2; font-size:1.6rem; font-weight:900; letter-spacing:2px; line-height:1; color:var(--text); }
+  .dim { position:absolute; inset:0; background:#000; opacity:0; z-index:4; animation:dim 4s infinite; }
+  .sheet { position:absolute; left:0; right:0; bottom:0; z-index:5; background:var(--card); border-radius:22px 22px 0 0; padding:8px 20px 14px; transform:translateY(105%); animation:sheet 4s infinite; }
+  .sheet div { display:flex; align-items:center; gap:14px; padding:14px 0; font-size:1.02rem; font-weight:500; }
+  .sheet div + div { border-top:1px solid var(--border); }
+  .sheet svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .a1 { position:absolute; top:34px; right:22px; z-index:3; width:70px; height:56px; animation:a1 4s infinite; }
+  .a2 { position:absolute; top:172px; right:124px; z-index:6; width:84px; height:64px; opacity:0; animation:a2 4s infinite; }
+  .hit { background:var(--soft); margin:0 -20px; padding-left:20px !important; padding-right:20px !important; border-radius:6px; }
+  @keyframes dim { 0%,42% { opacity:0; } 50%,92% { opacity:.55; } 100% { opacity:0; } }
+  @keyframes sheet { 0%,48% { transform:translateY(105%); } 58%,92% { transform:translateY(0); } 100% { transform:translateY(105%); } }
+  @keyframes a1 { 0%,40% { opacity:1; transform:translate(0,0); } 10%,30% { transform:translate(5px,-5px); } 44%,100% { opacity:0; } }
+  @keyframes a2 { 0%,58% { opacity:0; } 66%,92% { opacity:1; } 100% { opacity:0; } }
+
+  .steps { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .step { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:12px; display:flex; gap:10px; align-items:center; }
+  .step b.n { flex:none; width:30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; display:grid; place-items:center; }
+  .step strong { display:block; font-size:.9rem; }
+  .step span { font-size:.75rem; color:var(--muted); }
+
+  .actions { margin-top:14px; display:grid; gap:10px; }
+  button, .btn { font:inherit; font-weight:700; border-radius:14px; padding:14px; border:0; cursor:pointer; text-align:center; text-decoration:none; }
+  .primary { background:var(--blue); color:#fff; }
+  .ghost { background:var(--card); color:var(--text); border:1px solid var(--border); }
+  .wait { margin-top:14px; display:flex; align-items:center; justify-content:center; gap:10px; background:rgba(26,115,232,.1); color:var(--blue); border-radius:14px; padding:14px; font-weight:600; }
+  .wait::before { content:""; width:16px; height:16px; border:3px solid rgba(26,115,232,.25); border-top-color:var(--blue); border-radius:50%; animation:spin 1s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="pointer" aria-hidden="true">
+  <svg class="arrow" viewBox="0 0 60 60"><path d="M30 6 L52 30 L38 30 L38 54 L22 54 L22 30 L8 30 Z"/></svg>
+  <span>TOQUE AQUI</span>
+</div>
+
+<main>
+  <div class="globe"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div>
+  <h1>Toque em <span>•••</span> e abra no navegador</h1>
+  <p class="sub">Toque nos <b>•••</b> no canto superior direito e selecione “Abrir no Safari” ou “Abrir no navegador”.</p>
+
+  <div class="guide" aria-hidden="true">
+    <div class="badge"><i></i>GUIA ANIMADO</div>
+    <div class="dots">•••</div>
+
+    <!-- Step 1: arrow pointing at the ••• button -->
+    <svg class="arrow a1" viewBox="0 0 70 56"><g transform="rotate(-45 35 28)"><path d="M6 28 L30 6 L30 20 L64 20 L64 36 L30 36 L30 50 Z" transform="translate(70 0) scale(-1 1) translate(0 0)"/></g></svg>
+
+    <div class="dim"></div>
+    <div class="sheet">
+      <div><svg viewBox="0 0 24 24"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg>Denunciar</div>
+      <div class="hit"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 8l-2.5 5.5L8 16l2.5-5.5z"/></svg>Abrir no navegador</div>
+      <div><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Copiar link</div>
+    </div>
+
+    <!-- Step 2: arrow pointing at "Open in browser" -->
+    <svg class="arrow a2" viewBox="0 0 84 64"><g transform="rotate(-45 42 32)"><path d="M6 32 L32 8 L32 22 L78 22 L78 42 L32 42 L32 56 Z"/></g></svg>
+  </div>
+
+  <div class="steps">
+    <div class="step"><b class="n">1</b><div><strong>Toque em •••</strong><span>Canto superior direito</span></div></div>
+    <div class="step"><b class="n">2</b><div><strong>Abrir no navegador</strong><span>Safari ou Chrome</span></div></div>
+  </div>
+
+  <div class="actions">
+    <button class="ghost" id="copy">Copiar link</button>
+    <a class="btn primary" id="go" href="#">Continuar aqui</a>
+  </div>
+  <div class="wait">Aguardando o navegador…</div>
+</main>
+<script>
+
+  var ua = navigator.userAgent || "";
+  var enApp = /TikTok|musical_ly|BytedanceWebview|Instagram|FBAN|FBAV|Snapchat/i.test(ua);
+
+  // If already in a normal browser, go straight to your page
+  if (!enApp && !/[?&]guia=1/.test(location.search)) location.replace(DESTINO);
+
+  document.getElementById("go").href = DESTINO;
+  document.getElementById("copy").onclick = function () {
+    var b = this;
+    (navigator.clipboard ? navigator.clipboard.writeText(DESTINO) : Promise.reject())
+      .then(function () { b.textContent = "Link copiado!"; })
+      .catch(function () { prompt("Copie este link:", DESTINO); });
+  };
+</script>
+</body>
+</html>
